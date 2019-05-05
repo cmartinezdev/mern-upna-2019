@@ -1,0 +1,10 @@
+{
+  "name": "mern-upna-2019",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Carlos Martínez González",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^1.17.0"
+  }
+}
