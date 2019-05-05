@@ -1,10 +1,20 @@
 {
-  "name": "mern-upna-2019",
-  "version": "1.0.0",
-  "description": "",
-  "author": "Carlos Martínez González",
-  "license": "ISC",
-  "devDependencies": {
-    "prettier": "^1.17.0"
-  }
+    "name": "mern-upna-2019",
+    "version": "1.0.0",
+    "description": "",
+    "author": "Carlos Martínez González",
+    "license": "ISC",
+    "devDependencies": {
+        "npm-run-all": "^4.1.5",
+        "prettier": "^1.17.0"
+    },
+    "scripts": {
+        "install": "run-p install:*",
+        "install:api": "(cd api; npm install)",
+        "install:spa": "(cd spa; npm install)",
+        "start:api": "(cd api; npm start)",
+        "start:api:watch": "(cd api; npm run start:watch)",
+        "start:spa": "(cd spa; npm start)",
+        "storybook": "(cd spa; npm run storybook)"
+    }
 }
