@@ -9,14 +9,16 @@ import Error from './components/Error'
 import TodosList from './components/TodosList'
 import AddTodoModal from './components/AddTodoModal'
 
-import { getTodos } from './core/todos'
+import { getTodos, addTodo } from './core/todos'
 
 class App extends React.Component {
     state = {
         todos: [],
         isLoading: false,
-        error: false,
+        error: '',
         isAddTodoModalOpen: false,
+        isAddTodoModalLoading: false,
+        addTodoModalError: '',
     }
 
     componentDidMount() {
@@ -31,7 +33,11 @@ class App extends React.Component {
 
                 {this.state.isLoading && <Loading />}
                 {this.state.error && (
-                    <Error errorMessage="An error has occurred loading todos..." />
+                    <Error
+                        errorMessage={`An error has occurred loading todos... ${
+                            this.state.error
+                        }`}
+                    />
                 )}
 
                 <Container>
@@ -43,7 +49,9 @@ class App extends React.Component {
                 <AddTodoModal
                     isOpen={this.state.isAddTodoModalOpen}
                     onClose={this.handleOnAddTodoModalClose}
-                    onTodoAdded={this.handleOnTodoAdded}
+                    onTodoAdd={this.handleOnTodoAdd}
+                    error={this.state.addTodoModalError}
+                    isLoading={this.state.isAddTodoModalLoading}
                 />
             </>
         )
@@ -54,9 +62,23 @@ class App extends React.Component {
     handleOnAddTodoModalClose = () =>
         this.setState({ isAddTodoModalOpen: false })
 
-    handleOnTodoAdded = () => {
-        this.setState({ isAddTodoModalOpen: false })
-        this.loadTodos()
+    handleOnTodoAdd = description => {
+        this.setState({ isAddTodoModalLoading: true, addTodoModalError: '' })
+
+        addTodo(description)
+            .then(() => {
+                this.setState({
+                    isAddTodoModalOpen: false,
+                    isAddTodoModalLoading: false,
+                })
+                this.loadTodos()
+            })
+            .catch(error =>
+                this.setState({
+                    isAddTodoModalLoading: false,
+                    addTodoModalError: error.message,
+                })
+            )
     }
 
     handleOnTodoDoneClick = id => {
@@ -64,13 +86,17 @@ class App extends React.Component {
     }
 
     loadTodos = () => {
-        this.setState({ isLoading: true, todos: [], error: false })
+        this.setState({ isLoading: true, todos: [], error: '' })
         getTodos()
             .then(todos =>
-                this.setState({ todos, isLoading: false, error: false })
+                this.setState({ todos, isLoading: false, error: '' })
             )
-            .catch(() =>
-                this.setState({ todos: [], error: true, isLoading: false })
+            .catch(error =>
+                this.setState({
+                    todos: [],
+                    error: error.message,
+                    isLoading: false,
+                })
             )
     }
 }

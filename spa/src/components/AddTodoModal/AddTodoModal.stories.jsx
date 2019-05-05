@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { withKnobs, boolean } from '@storybook/addon-knobs'
+import { withKnobs, text, boolean } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 
 import AddTodoModal from '.'
@@ -11,6 +11,8 @@ storiesOf('AddTodoModal', module)
         <AddTodoModal
             isOpen={boolean('isOpen', 'true')}
             onClose={action('onClose')}
-            onTodoAdded={action('onTodoAdded')}
+            onTodoAdd={action('onTodoAdd')}
+            error={text('error', '')}
+            isLoading={boolean('isLoading', false)}
         />
     ))

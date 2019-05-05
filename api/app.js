@@ -7,7 +7,7 @@ const routes = require('./routes')
 
 const app = express()
 
-app.use((req, res, next) => setTimeout(next, Math.random() * 1000 + 1000))
+app.use((req, res, next) => setTimeout(next, Math.random() * 500 + 500))
 app.use(cors())
 app.use(logger('dev'))
 app.use(express.json())

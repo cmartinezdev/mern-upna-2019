@@ -11,7 +11,7 @@ const styles = {
 }
 
 const Error = ({ errorMessage, classes }) => (
-    <Typography variant="h6" className={classes.error}>
+    <Typography variant="caption" className={classes.error} color="error">
         {errorMessage || 'An error has occurred'}
     </Typography>
 )
